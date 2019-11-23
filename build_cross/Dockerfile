@@ -1,0 +1,44 @@
+FROM su2code/build-su2:latest
+ENV LANG C.UTF-8
+RUN apt-get update && apt-get install -y \
+    clang \
+    cmake \
+    patch \
+    libssl-dev \
+    lzma-dev \
+    libxml2-dev \
+    libcrypto++ \
+    wget \
+    mingw-w64
+
+# Get the osxcross tool
+RUN git clone https://github.com/tpoechtrager/osxcross && cd osxcross 
+
+# Copy the OSX sdk
+COPY MacOSX10.15.sdk.tar.xz /osxcross/tarballs/MacOSX10.15.sdk.tar.xz
+
+ENV LDFLAGS ""
+
+# Build OSX cross compiler
+RUN cd osxcross && UNATTENDED=1 ./build.sh
+
+# Copy and extract Microsoft MPI
+COPY msmpi_v10.1.2.tar.gz /msmpi_v10.1.2.tar.gz
+RUN tar xzf msmpi_v10.1.2.tar.gz
+
+# Copy hostfiles 
+COPY hostfiles /hostfiles
+
+# Copy the mpich script
+COPY download_compile_mpich.sh /download_compile_mpich.sh
+
+ENV PATH /osxcross/target/bin:$PATH
+
+# Compile MPICH for darwin
+RUN sh download_compile_mpich.sh 3.3.2 x86_64-apple-darwin19 
+
+# Compile MPICH for linux
+RUN LDFLAGS=" -static -static-libstdc++ -static-libgcc" sh download_compile_mpich.sh 3.3.2 x86_64-linux-gnu
+
+# Code file to execute when the docker container starts up (`entrypoint.sh`)
+ENTRYPOINT ["/compileSU2.sh"]

@@ -1,0 +1,18 @@
+[binaries]
+c = '/osxcross/target/bin/o64-clang'
+cpp = '/osxcross/target/bin/o64-clang++'
+ar = '/osxcross/target/bin/x86_64-apple-darwin19-ar'
+strip = '/osxcross/target/bin/x86_64-apple-darwin19-strip'
+pkgconfig = '/osxcross/target/bin/x86_64-apple-darwin19-pkg-config'
+
+[host_machine]
+system ='darwin'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
+
+[properties]
+cpp_link_args = ['-L/mpich-x86_64-apple-darwin19/lib', '-lmpi', '-lpmpi']
+c_link_args   = ['-L/mpich-x86_64-apple-darwin19/lib', '-lmpi', '-lpmpi']
+cpp_args      = ['-Wno-inconsistent-missing-override', '-I/mpich-x86_64-apple-darwin19/include']
+c_args        = ['-I/mpich-x86_64-apple-darwin19/include']

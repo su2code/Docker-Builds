@@ -1,0 +1,20 @@
+[binaries]
+c = 'x86_64-linux-gnu-gcc'
+cpp = 'x86_64-linux-gnu-g++'
+ar = 'x86_64-linux-gnu-ar'
+strip = 'x86_64-linux-gnu-strip'
+pkgconfig = 'x86_64-linux-gnu-pkg-config'
+
+[host_machine]
+system ='linux'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
+
+[properties]
+cpp_link_args = ['-static', '-static-libstdc++', '-static-libgcc', '-L/mpich-x86_64-linux-gnu/lib', '-lmpi', '-lxml2', '-lbacktrace', '-lz', '-lpthread', '-lrt']
+c_link_args   = ['-static', '-static-libstdc++', '-static-libgcc', '-L/mpich-x86_64-linux-gnu/lib', '-lmpi', '-lxml2', '-lbacktrace', '-lz', '-lpthread', '-lrt']
+cpp_args      = ['-Wno-inconsistent-missing-override', '-I/mpich-x86_64-linux-gnu/include']
+c_args        = ['-I/mpich-x86_64-linux-gnu/include']
+
+
