@@ -94,7 +94,7 @@ else
 fi
 cp -R ./TestData/* tests/TestCases/
 if [ ! -z "$tutorialbranch" ]; then
-  git clone --depth=1 -b $tutorialbranch https://github.com/su2code/su2code.github.io ./Tutorials
+  git clone --depth=1 -b $tutorialbranch https://github.com/su2code/Tutorials ./Tutorials
 else
   if [ ! -d "src/Tutorials" ]; then
     echo "$PWD/src/Tutorials not found. Make sure to mount existing su2code/su2code.github.io repo or use -t to provide a branch to clone."
