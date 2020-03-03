@@ -1,4 +1,4 @@
-FROM su2code/build-su2:20191029
+FROM su2code/build-su2:latest
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY runTests.sh /runTests.sh
