@@ -1,6 +1,11 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
+
+LABEL org.opencontainers.image.source https://github.com/su2code/Docker-Builds
+
 ENV LANG C.UTF-8
-RUN apt-get update && apt-get install -y \
+RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
+RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
+    apt-utils \
     python3 \
     pkg-config \
     python3-pip \
