@@ -7,9 +7,6 @@ on:
   push:
     branches:
       - 'master'
-  pull_request:
-    branches:
-      - 'master'
 
 jobs:
   docker:
@@ -44,11 +41,4 @@ jobs:
         run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 -t ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ steps.vars.outputs.date_tag }} --push ./build/
 
       - name: Build and push test-su2
-        uses: docker/build-push-action@v2
-        with:
-          context: test
-          push: true
-          build-args: |
-            BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ steps.vars.outputs.date_tag }}
-          tags: ghcr.io/${{ github.repository_owner }}/su2/test-su2:${{ steps.vars.outputs.date_tag }}
-          platforms: linux/amd64,linux/arm64
+        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ steps.vars.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2:${{ steps.vars.outputs.date_tag }} --push ./test/
