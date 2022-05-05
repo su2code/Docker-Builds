@@ -42,7 +42,7 @@ jobs:
         with:
           context: build
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/su2code/build-su2:${{ steps.vars.outputs.date_tag }}
+          tags: ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ steps.vars.outputs.date_tag }}
           platforms: linux/amd64,linux/arm64
 
       - name: Build and push test-su2
@@ -51,6 +51,6 @@ jobs:
           context: test
           push: true
           build-args: |
-            BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2code/build-su2:${{ steps.vars.outputs.date_tag }}
-          tags: ghcr.io/${{ github.repository_owner }}/su2code/test-su2:${{ steps.vars.outputs.date_tag }}
+            BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ steps.vars.outputs.date_tag }}
+          tags: ghcr.io/${{ github.repository_owner }}/su2/test-su2:${{ steps.vars.outputs.date_tag }}
           platforms: linux/amd64,linux/arm64
