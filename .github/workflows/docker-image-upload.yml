@@ -41,7 +41,7 @@ jobs:
         run: docker buildx create --use
 
       - name: Build and push build-su2
-        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 -t ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ steps.vars.outputs.date_tag }} --push .
+        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 -t ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ steps.vars.outputs.date_tag }} --push ./build/
 
       - name: Build and push test-su2
         uses: docker/build-push-action@v2
