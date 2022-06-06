@@ -45,8 +45,10 @@ if [ ! -z "$branch" ]; then
   fi
   cd "src"
   if [ -d $name ]; then
+    # Remove any previous local repo. For non-ephemeral self-hosted runners
     rm -rf $name
   fi
+  # Clone only the latest commit, without the Git history. It is much faster this way. 
   git clone --recursive --depth=1 --shallow-submodules https://github.com/su2code/SU2 $name
   cd $name
   git config --add remote.origin.fetch '+refs/pull/*/merge:refs/remotes/origin/refs/pull/*/merge'
