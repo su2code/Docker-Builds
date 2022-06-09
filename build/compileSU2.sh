@@ -53,7 +53,7 @@ if [ ! -z "$branch" ]; then
   cd $name
   git config --add remote.origin.fetch '+refs/pull/*/merge:refs/remotes/origin/refs/pull/*/merge'
   git config --add remote.origin.fetch '+refs/heads/*:refs/remotes/origin/refs/heads/*'
-  git fetch origin
+  git fetch origin --depth=1 $branch:$branch
   git checkout $branch
   git submodule update
 else
