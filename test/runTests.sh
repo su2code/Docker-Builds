@@ -66,12 +66,17 @@ if [ ! -z "$su2branch" ]; then
   echo "Branch provided. Cloning to $PWD/src/$name"
   cd "src"
 
+  if [ -d $name ]; then
+    # Remove any previous local repo. For non-ephemeral self-hosted runners
+    rm -rf $name
+  fi
   # Clone su2code/SU2, su2code/TestCases and su2code/Tutorials
-  git clone -b master https://github.com/su2code/SU2 $name
+  # Clone only the latest commit, without the Git history. It is much faster this way.
+  git clone -b master --recursive --depth=1 --shallow-submodules https://github.com/su2code/SU2 $name
   cd $name
   git config --add remote.origin.fetch '+refs/pull/*/merge:refs/remotes/origin/refs/pull/*/merge'
   git config --add remote.origin.fetch '+refs/heads/*:refs/remotes/origin/refs/heads/*'
-  git fetch origin
+  git fetch origin --depth=1 $su2branch:$su2branch
   git checkout $su2branch
   git submodule update
   cd ..
