@@ -1,4 +1,6 @@
-FROM su2code/build-su2:latest
+ARG BASE_IMAGE=ghcr.io/su2code/su2/build-su2:220614-1237
+FROM $BASE_IMAGE
+
 ENV LANG C.UTF-8
 RUN apt-get update && apt-get install -y \
     clang \
