@@ -1,4 +1,4 @@
-ARG ghcr.io/su2code/su2/build-su2:220614-1237
+ARG BASE_IMAGE=ghcr.io/su2code/su2/build-su2:220614-1237
 
 FROM $BASE_IMAGE
 
