@@ -1,0 +1,8 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+# Compile MPICH for linux
+RUN LDFLAGS=" -static -static-libstdc++ -static-libgcc" sh download_compile_mpich.sh 3.3.2 x86_64-linux-gnu
+
+# Code file to execute when the docker container starts up (`entrypoint.sh`)
+ENTRYPOINT ["/compileSU2.sh"]
