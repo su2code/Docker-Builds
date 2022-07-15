@@ -98,7 +98,7 @@ jobs:
         run: docker buildx create --use
 
       - name: Build and push build-su2-cross
-        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ needs.build-su2.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-cross-stage1:${{ needs.build-su2.outputs.date_tag }} --push --file Dockerfile.stage1 ./build_cross/
+        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ needs.build-su2.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-cross-stage1:${{ needs.build-su2.outputs.date_tag }} --push --file ./build_cross/Dockerfile.stage1 ./build_cross/
 
   cross-build-su2-linux:
     needs: [cross-build-su2-mac]
@@ -127,4 +127,4 @@ jobs:
         run: docker buildx create --use
 
       - name: Build and push build-su2-cross
-        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-cross-stage1:${{ needs.build-su2.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-cross:${{ needs.build-su2.outputs.date_tag }} --push --file Dockerfile.stage2 ./build_cross/
+        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-cross-stage1:${{ needs.build-su2.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-cross:${{ needs.build-su2.outputs.date_tag }} --push --file ./build_cross/Dockerfile.stage2 ./build_cross/
