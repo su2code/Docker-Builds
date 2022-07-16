@@ -101,7 +101,7 @@ jobs:
         run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ needs.build-su2.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-cross-stage1:${{ needs.build-su2.outputs.date_tag }} --push --file ./build_cross/Dockerfile.stage1 ./build_cross/
 
   cross-build-su2-linux:
-    needs: [cross-build-su2-mac]
+    needs: [build-su2, cross-build-su2-mac]
     if: ${{ always() && !(contains(needs.*.result, 'failure')) }}
     runs-on: ubuntu-latest
     steps:
