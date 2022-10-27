@@ -11,6 +11,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     python3-pip \
     git \
     build-essential \
+    cmake \
     python3-numpy \
     python3-scipy \
     python3-mpi4py \
