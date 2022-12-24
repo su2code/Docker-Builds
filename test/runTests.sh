@@ -90,6 +90,7 @@ else
   cp -r src/SU2/TestCases tests/.
 fi
 if [ ! -z "$testbranch" ]; then
+  rm -r ./TestData
   git clone --depth=1 -b $testbranch https://github.com/su2code/TestCases.git ./TestData
 else
   if [ ! -d "src/TestData" ]; then
@@ -99,6 +100,7 @@ else
 fi
 cp -R ./TestData/* tests/TestCases/
 if [ ! -z "$tutorialbranch" ]; then
+  rm -r ./Tutorials
   git clone --depth=1 -b $tutorialbranch https://github.com/su2code/Tutorials ./Tutorials
 else
   if [ ! -d "src/Tutorials" ]; then

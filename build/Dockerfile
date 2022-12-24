@@ -17,6 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     python3-mpi4py \
     swig \
     libopenmpi-dev \
+    libopenblas-dev \
     openmpi-bin \
     ccache \
  && rm -rf /var/lib/apt/lists/* \
