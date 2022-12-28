@@ -20,6 +20,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     libopenblas-dev \
     openmpi-bin \
     ccache \
+    petsc-dev \
+    python3-petsc4py \
+    python3-rtree \
  && rm -rf /var/lib/apt/lists/* \
  && update-alternatives --install /usr/bin/python python /usr/bin/python3 10 \
  && /usr/sbin/update-ccache-symlinks \
