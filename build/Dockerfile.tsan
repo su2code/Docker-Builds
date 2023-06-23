@@ -43,7 +43,7 @@ RUN cd / \
  && cd / \
  && rm -rf gcc_sources \
  && rm -rf gcc_objdir \
- && cd /gcc_install \
+ && cd /gcc_install/bin \
  && ln -s gcc cc
  
 # Ensure that ccache uses the built gcc
