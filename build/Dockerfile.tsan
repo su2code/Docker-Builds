@@ -25,8 +25,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     python3-rtree \
     curl \
     flex \
-    gcc-multilib \
-    g++-multilib \
  && rm -rf /var/lib/apt/lists/* \
  && update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 
@@ -39,7 +37,7 @@ RUN cd / \
  && cd / \
  && mkdir gcc_objdir \
  && cd gcc_objdir \
- && /gcc_sources/configure --prefix=/gcc_install --enable-languages=c,c++ --disable-linux-futex \
+ && /gcc_sources/configure --prefix=/gcc_install --enable-languages=c,c++ --disable-linux-futex --disable-multilib \
  && make \
  && make install \
  && cd / \
