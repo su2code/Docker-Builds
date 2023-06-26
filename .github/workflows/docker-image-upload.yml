@@ -52,7 +52,7 @@ jobs:
     if: ${{ always() && !(contains(needs.*.result, 'failure')) }}
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false,
+      fail-fast: false
       matrix:
         platform: [amd64, arm64]
     steps:
