@@ -54,7 +54,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [amd64, arm64]
+        platform: [amd64] # arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -102,7 +102,8 @@ jobs:
         run: docker buildx create --use
 
       - name: Merge single-platform build-su2-tsan images
-        run: docker buildx imagetools create -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan:${{ needs.date-tag.outputs.date_tag }} ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan-amd64:${{ needs.date-tag.outputs.date_tag }} ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan-arm64:${{ needs.date-tag.outputs.date_tag }}
+        run: docker buildx imagetools create -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan:${{ needs.date-tag.outputs.date_tag }} ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan-amd64:${{ needs.date-tag.outputs.date_tag }}
+        # ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan-arm64:${{ needs.date-tag.outputs.date_tag }}
 
   test-su2:
     needs: [date-tag, build-su2, build-su2-tsan]
@@ -134,7 +135,8 @@ jobs:
         run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2:${{ needs.date-tag.outputs.date_tag }} --push ./test/
 
       - name: Build and push test-su2-tsan
-        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2-tsan:${{ needs.date-tag.outputs.date_tag }} --push ./test/
+        run: docker buildx build --platform=linux/amd64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2-tsan:${{ needs.date-tag.outputs.date_tag }} --push ./test/
+        # --platform=linux/arm64
 
   cross-build-su2-mac:
     needs: [date-tag, build-su2]
