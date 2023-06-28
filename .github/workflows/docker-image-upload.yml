@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Set variables
         id: vars
-        run: echo "::set-output name=date_tag::$(date +%y%m%d-%H%M)"
+        run: echo "date_tag=$(date +%y%m%d-%H%M)" >> "$GITHUB_OUTPUT"
 
   build-su2:
     needs: [date-tag]
