@@ -6,7 +6,7 @@
 # $4 : Path of the installation directory
 # $5 : Test script to execute
 
-usage="$(basename "$0") [-h] [-t tutorial_branch] [-b su2_branch] [-c testcases_branch] [-s test_script] 
+usage="$(basename "$0") [-h] [-t tutorial_branch] [-b su2_branch] [-c testcases_branch] [-s test_script] [-a args]
 where:
     -h  show this help text
     -t  branch of su2code/su2code.github.io repo 
@@ -15,7 +15,8 @@ where:
     (if not provided, it is assumed that it is mounted at /src/Tutorials)
     -c  branch of su2code/TestCases repo.
     (if not provided, it is assumed that it is mounted at /src/TestData)
-    -s  name of the test script to execute (default: parallel_regression.py).
+    -s  name of the test script to execute (default: parallel_regression.py)
+    -a  arguments that should be passed to the test script (default: empty)
 
 Compiled binaries must be mounted at /install/ !
 
@@ -26,6 +27,7 @@ su2branch=""
 testbranch=""
 tutorialbranch=""
 script="parallel_regression.py"
+args=""
 
 while [ "`echo $1 | cut -c1`" = "-" ]
 do
@@ -44,6 +46,10 @@ do
             ;;
         -s)
                 script=$2
+                shift 2
+            ;;
+        -a)
+                args=$2
                 shift 2
             ;;
         *)
@@ -122,7 +128,7 @@ alias mpirun='mpirun --allow-run-as-root'
 
 # Run Test Script
 cd tests/TestCases
-python $script
+python $script $args
 
 if [ $? -eq 0 ]; then
     echo "Tests passed"
