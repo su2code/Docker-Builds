@@ -120,8 +120,8 @@ cp -R ./Tutorials/ tests/.
 export SU2_RUN=$PWD/install/bin
 export PATH=$SU2_RUN:$PATH
 export PYTHONPATH=$SU2_RUN:$PYTHONPATH
-export MPP_DATA_DIRECTORY=$PWD/install/subprojects/Mutationpp/data
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/install/build/subprojects/Mutationpp
+export MPP_DATA_DIRECTORY=$SU2_RUN/../mpp-data
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SU2_RUN/../lib
 export OMPI_MCA_btl_vader_single_copy_mechanism=none
 export SU2_MPI_COMMAND='mpirun --allow-run-as-root -n %i %s'
 alias mpirun='mpirun --allow-run-as-root'
