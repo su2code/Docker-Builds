@@ -132,7 +132,7 @@ jobs:
         run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-asan:${{ needs.date-tag.outputs.date_tag }} --push --file ./build/Dockerfile.asan ./build/
 
   test-su2:
-    needs: [date-tag, build-su2, build-su2-tsan]
+    needs: [date-tag, build-su2, build-su2-tsan, build-su2-asan]
     if: ${{ always() && !(contains(needs.*.result, 'failure')) }}
     runs-on: ubuntu-latest
     steps:
@@ -163,6 +163,9 @@ jobs:
       - name: Build and push test-su2-tsan
         run: docker buildx build --platform=linux/amd64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2-tsan:${{ needs.date-tag.outputs.date_tag }} --push ./test/
         # --platform=linux/arm64
+
+      - name: Build and push test-su2-asan
+        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-asan:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2-asan:${{ needs.date-tag.outputs.date_tag }} --push ./test/
 
   cross-build-su2-mac:
     needs: [date-tag, build-su2]
