@@ -1,0 +1,7 @@
+ARG BASE_IMAGE=ghcr.io/su2code/su2/build-su2:220614-1237
+
+FROM $BASE_IMAGE
+
+# Enable address sanitizer
+ENV CXXFLAGS="-fsanitize=address -fno-omit-frame-pointer $CXXFLAGS"
+ENV CFLAGS="-fsanitize=address -fno-omit-frame-pointer $CFLAGS"

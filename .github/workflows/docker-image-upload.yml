@@ -102,8 +102,37 @@ jobs:
         run: docker buildx imagetools create -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan:${{ needs.date-tag.outputs.date_tag }} ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan-amd64:${{ needs.date-tag.outputs.date_tag }}
         # ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan-arm64:${{ needs.date-tag.outputs.date_tag }}
 
+  build-su2-asan:
+    needs: [date-tag, build-su2]
+    if: ${{ always() && !(contains(needs.*.result, 'failure')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Github Docker Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Buildx Create
+        run: docker buildx create --use
+
+      - name: Build and push build-su2-asan
+        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/build-su2-asan:${{ needs.date-tag.outputs.date_tag }} --push --file ./build/Dockerfile.asan ./build/
+
   test-su2:
-    needs: [date-tag, build-su2, build-su2-tsan]
+    needs: [date-tag, build-su2, build-su2-tsan, build-su2-asan]
     if: ${{ always() && !(contains(needs.*.result, 'failure')) }}
     runs-on: ubuntu-latest
     steps:
@@ -134,6 +163,9 @@ jobs:
       - name: Build and push test-su2-tsan
         run: docker buildx build --platform=linux/amd64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-tsan:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2-tsan:${{ needs.date-tag.outputs.date_tag }} --push ./test/
         # --platform=linux/arm64
+
+      - name: Build and push test-su2-asan
+        run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 --build-arg BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/su2/build-su2-asan:${{ needs.date-tag.outputs.date_tag }} -t ghcr.io/${{ github.repository_owner }}/su2/test-su2-asan:${{ needs.date-tag.outputs.date_tag }} --push ./test/
 
   cross-build-su2-mac:
     needs: [date-tag, build-su2]
