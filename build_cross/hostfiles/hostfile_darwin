@@ -4,6 +4,7 @@ cpp = '/osxcross/target/bin/o64-clang++'
 ar = '/osxcross/target/bin/x86_64-apple-darwin19-ar'
 strip = '/osxcross/target/bin/x86_64-apple-darwin19-strip'
 pkg-config = '/osxcross/target/bin/x86-apple-darwin19-pkg-config'
+ranlib = '/osxcross/target/bin/x86_64-apple-darwin19-ranlib'
 
 [host_machine]
 system ='darwin'
