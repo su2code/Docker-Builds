@@ -3,13 +3,13 @@ c = '/osxcross/target/bin/o64-clang'
 cpp = '/osxcross/target/bin/o64-clang++'
 ar = '/osxcross/target/bin/x86_64-apple-darwin19-ar'
 strip = '/osxcross/target/bin/x86_64-apple-darwin19-strip'
-pkg-config = '/osxcross/target/bin/x86-apple-darwin19-pkg-config'
+pkg-config = '/osxcross/target/bin/x86_64-apple-darwin19-pkg-config'
 ranlib = '/osxcross/target/bin/x86_64-apple-darwin19-ranlib'
 
 [host_machine]
 system ='darwin'
-cpu_family = 'x86'
-cpu = 'i386'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
 endian = 'little'
 
 [built-in options]
