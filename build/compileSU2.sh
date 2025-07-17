@@ -1,14 +1,14 @@
 #!/bin/sh -l
 
 echo "SU2 v7 Docker Compilation Container"
-usage="$(basename "$0") [-h] [-f build_flags] [-b branch_name] 
+usage="$(basename "$0") [-h] [-f build_flags] [-b branch_name]
 where:
     -h  show this help text
     -f  meson build flags (ignored if a directory \"docker_build\" is found at /src/SU2).
     -b  branch name (if not given, existing SU2 directory must be mounted in /src/SU2).
 
 Compiled binaries can be found at /install/. Mount that directory for access.
-Note: If you specify a working directory using the --workdir option for docker, 
+Note: If you specify a working directory using the --workdir option for docker,
       append this directory to all paths above (e.g. use --workdir=/tmp if running in user mode)."
 
 flags=""
@@ -24,7 +24,7 @@ if [ "$#" -ne 0 ]; then
             -f)
                     flags=$2
                     shift 2
-                ;;  
+                ;;
             -b)
                     branch=$2
                     shift 2
@@ -48,7 +48,7 @@ if [ ! -z "$branch" ]; then
     # Remove any previous local repo. For non-ephemeral self-hosted runners
     rm -rf $name
   fi
-  # Clone only the latest commit, without the Git history. It is much faster this way. 
+  # Clone only the latest commit, without the Git history. It is much faster this way.
   git clone --recursive --depth=1 --shallow-submodules https://github.com/su2code/SU2 $name
   cd $name
   git config --add remote.origin.fetch '+refs/pull/*/merge:refs/remotes/origin/refs/pull/*/merge'
@@ -65,10 +65,10 @@ else
 fi
 
 if [ ! -d "docker_build" ]; then
-  ./meson.py docker_build --prefix=$workdir/install $flags
+  ./meson.py setup docker_build --prefix=$workdir/install $flags
 else
   echo "Build Directory found. Ignoring build flags. To set new flags, remove docker_build directory."
-  ./meson.py docker_build --reconfigure $flags
+  ./meson.py setup docker_build --reconfigure $flags
 fi
 
 ./ninja -C docker_build install
