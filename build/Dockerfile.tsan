@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 LABEL org.opencontainers.image.source https://github.com/su2code/Docker-Builds
 
@@ -32,7 +32,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
 RUN cd / \
  && git clone git://gcc.gnu.org/git/gcc.git gcc_sources \
  && cd gcc_sources \
- && git checkout releases/gcc-9.4.0 \
+ && git checkout releases/gcc-13.3.0 \
  && ./contrib/download_prerequisites \
  && cd / \
  && mkdir gcc_objdir \
@@ -45,15 +45,15 @@ RUN cd / \
  && rm -rf gcc_objdir \
  && cd /gcc_install/bin \
  && ln -s gcc cc
- 
+
 # Ensure that ccache uses the built gcc
 RUN export PATH=/gcc_install/bin:$PATH \
  && /usr/sbin/update-ccache-symlinks
 
 # Configure environment for the built gcc, also enable thread sanitizer
 ENV LD_LIBRARY_PATH=/gcc_install/lib64:$LD_LIBRARY_PATH
-ENV CXXFLAGS="-I/gcc_install/include/c++/9.4.0 -I/gcc_install/include/c++/9.4.0/x86_64-pc-linux-gnu -fsanitize=thread"
-ENV CFLAGS="-I/gcc_install/include/c++/9.4.0 -I/gcc_install/include/c++/9.4.0/x86_64-pc-linux-gnu -fsanitize=thread"
+ENV CXXFLAGS="-I/gcc_install/include/c++/13.3.0 -I/gcc_install/include/c++/13.3.0/x86_64-pc-linux-gnu -fsanitize=thread"
+ENV CFLAGS="-I/gcc_install/include/c++/13.3.0 -I/gcc_install/include/c++/13.3.0/x86_64-pc-linux-gnu -fsanitize=thread"
 ENV LDFLAGS="-L/gcc_install/lib64 -fsanitize=thread"
 ENV PATH=/usr/lib/ccache:/gcc_install/bin:$PATH
 ENV TSAN_OPTIONS="history_size=7 halt_on_error=1"

@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 LABEL org.opencontainers.image.source https://github.com/su2code/Docker-Builds
 
@@ -26,7 +26,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
  && rm -rf /var/lib/apt/lists/* \
  && update-alternatives --install /usr/bin/python python /usr/bin/python3 10 \
  && /usr/sbin/update-ccache-symlinks \
- && echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a ~/.bashrc 
+ && echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a ~/.bashrc
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY compileSU2.sh /compileSU2.sh
