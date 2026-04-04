@@ -9,7 +9,7 @@
 usage="$(basename "$0") [-h] [-t tutorial_branch] [-b su2_branch] [-c testcases_branch] [-s test_script] [-a args]
 where:
     -h  show this help text
-    -t  branch of su2code/su2code.github.io repo 
+    -t  branch of su2code/su2code.github.io repo
     (if not provided, it is assumed that it is mounted at /src/SU2)
     -b  branch of su2code/SU2 repo.
     (if not provided, it is assumed that it is mounted at /src/Tutorials)
@@ -20,7 +20,7 @@ where:
 
 Compiled binaries must be mounted at /install/ !
 
-Note: If you specify a working directory using the --workdir option for docker, 
+Note: If you specify a working directory using the --workdir option for docker,
       append this directory to all paths above (e.g. use --workdir=/tmp if running in user mode)."
 
 su2branch=""
@@ -122,6 +122,7 @@ export PATH=$SU2_RUN:$PATH
 export PYTHONPATH=$SU2_RUN:$PYTHONPATH
 export MPP_DATA_DIRECTORY=$SU2_RUN/../mpp-data
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SU2_RUN/../lib
+export OMPI_MCA_osc=pt2pt
 export OMPI_MCA_btl_vader_single_copy_mechanism=none
 export SU2_MPI_COMMAND='mpirun --allow-run-as-root -n %i %s'
 alias mpirun='mpirun --allow-run-as-root'
