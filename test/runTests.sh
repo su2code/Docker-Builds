@@ -115,6 +115,7 @@ else
   fi
 fi
 cp -R ./Tutorials/ tests/.
+cp -R src/SU2/TestCases/Tutorials/* tests/Tutorials/.
 
 # Set the environment variables
 export SU2_RUN=$PWD/install/bin
